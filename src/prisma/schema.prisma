@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Company {
+  id          String           @id @default(cuid())
+  ticker      String           @unique
+  name        String
+  sector      String?
+  industry    String?
+  exchange    String?
+  description String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  reports     ResearchReport[]
+}
+
+model User {
+  id               String           @id @default(cuid())
+  email            String           @unique
+  password         String
+  name             String?
+  plan             String           @default("free")
+  searchesRemaining Int             @default(6)
+  createdAt        DateTime         @default(now())
+  researchReports  ResearchReport[]
+  historyEntries   HistoryEntry[]
+}
+
+model ResearchReport {
+  id             String   @id @default(cuid())
+  ticker         String
+  companyId      String?
+  company        Company? @relation(fields: [companyId], references: [id])
+  userId         String?
+  user           User?    @relation(fields: [userId], references: [id])
+  recommendation String
+  confidence     Float?
+  summary        String
+  sentimentScore Float?
+  riskScore      Float?
+  financialMetrics Json?
+  newsSnapshot   Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model HistoryEntry {
+  id             String   @id @default(cuid())
+  ticker         String
+  companyName    String
+  recommendation String
+  score          Float
+  userId         String?
+  user           User?    @relation(fields: [userId], references: [id])
+  createdAt      DateTime @default(now())
+}
