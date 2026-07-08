@@ -63,7 +63,11 @@ const createPrismaClient = (): PrismaLike => {
     const PrismaClientCtor = prismaModule.PrismaClient;
 
     if (PrismaClientCtor) {
-      return new PrismaClientCtor({ datasourceUrl: env.DATABASE_URL });
+      const { Pool } = require("pg");
+      const { PrismaPg } = require("@prisma/adapter-pg");
+      const pool = new Pool({ connectionString: env.DATABASE_URL });
+      const adapter = new PrismaPg(pool);
+      return new PrismaClientCtor({ adapter }) as unknown as PrismaLike;
     }
   } catch (error) {
     logError("Using Prisma fallback client", { error });
