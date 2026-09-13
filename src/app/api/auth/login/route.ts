@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
         },
       },
     });
-  } catch (error) {
+  } catch {
     return internalError("Unable to sign in. Please try again.");
   }
 }

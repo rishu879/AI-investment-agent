@@ -3,10 +3,32 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Home, History, Search } from "lucide-react";
+import {
+  Home,
+  TrendingUp,
+  SlidersHorizontal,
+  LineChart,
+  Briefcase,
+  Bookmark,
+  Calculator,
+  Bot,
+  History,
+  Sparkles,
+  Zap,
+  GraduationCap,
+} from "lucide-react";
 
 export const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: Home },
+  { name: "Trading Practice (Demo)", href: "/dashboard/trading-practice", icon: Zap },
+  { name: "Learner Academy", href: "/dashboard/learn", icon: GraduationCap },
+  { name: "Live Markets", href: "/dashboard/markets", icon: TrendingUp },
+  { name: "Stock Screener", href: "/dashboard/screener", icon: SlidersHorizontal },
+  { name: "Technical & AI Predictor", href: "/dashboard/technical", icon: LineChart },
+  { name: "Portfolio Tracker", href: "/dashboard/portfolio", icon: Briefcase },
+  { name: "Watchlist & Alerts", href: "/dashboard/watchlist", icon: Bookmark },
+  { name: "Financial Calculators", href: "/dashboard/calculators", icon: Calculator },
+  { name: "AI Assistant", href: "/dashboard/assistant", icon: Bot },
   { name: "Research History", href: "/dashboard/history", icon: History },
 ];
 
@@ -17,45 +39,53 @@ export function Sidebar() {
     <div className="flex h-full flex-col border-r bg-card text-card-foreground">
       <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
         <Link href="/" className="flex items-center gap-2 font-semibold">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Search className="h-4 w-4" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm shadow-primary/20">
+            <Sparkles className="h-4 w-4" />
           </div>
-          <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-            AI Invest
+          <span className="text-base font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+            AI InvestAgent
           </span>
         </Link>
       </div>
-      <div className="flex-1 overflow-auto py-4">
-        <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
+
+      <div className="flex-1 overflow-y-auto py-3">
+        <div className="px-3 py-1 mb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/80">
+          Core Platform
+        </div>
+        <nav className="grid items-start px-2 text-sm font-medium gap-1">
           {navigation.map((item) => {
             const Icon = item.icon;
-            const isActive = pathname === item.href || pathname?.startsWith(`${item.href}/`);
+            const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(`${item.href}`));
             return (
               <Link
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 transition-all",
+                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all",
                   isActive
-                    ? "bg-muted text-foreground"
+                    ? "bg-primary/10 text-primary font-semibold"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 )}
               >
-                <Icon className="h-4 w-4" />
-                {item.name}
+                <Icon className={cn("h-4 w-4 shrink-0", isActive ? "text-primary" : "text-muted-foreground")} />
+                <span>{item.name}</span>
               </Link>
             );
           })}
         </nav>
       </div>
+
       <div className="mt-auto p-4 border-t">
-        <div className="rounded-xl bg-muted/50 p-4">
-          <h4 className="mb-2 text-sm font-semibold">Upgrade to Pro</h4>
-          <p className="mb-4 text-xs text-muted-foreground">
-            Get advanced AI analysis and unlimited queries.
+        <div className="rounded-xl border border-primary/20 bg-primary/5 p-3.5 shadow-sm">
+          <div className="flex items-center gap-2 mb-1.5">
+            <Sparkles className="h-4 w-4 text-primary" />
+            <h4 className="text-xs font-semibold text-foreground">Pro Institutional</h4>
+          </div>
+          <p className="text-[11px] text-muted-foreground leading-snug mb-3">
+            Real-time market streaming, ML predictions & unlimited AI assistant queries.
           </p>
-          <button className="w-full rounded-md bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:bg-primary/90 transition-colors">
-            Upgrade Now
+          <button className="w-full rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm">
+            Upgrade Plan
           </button>
         </div>
       </div>

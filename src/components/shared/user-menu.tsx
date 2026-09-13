@@ -11,20 +11,30 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
+
+function subscribe(onStoreChange: () => void) {
+  window.addEventListener("storage", onStoreChange);
+  return () => window.removeEventListener("storage", onStoreChange);
+}
+
+function getEmailSnapshot() {
+  return window.localStorage.getItem("ai-investment-agent-user");
+}
+
+function getNameSnapshot() {
+  return window.localStorage.getItem("ai-investment-agent-name");
+}
+
+function getEmptySnapshot() {
+  return null;
+}
 
 export function UserMenu() {
   const router = useRouter();
-  const [email, setEmail] = useState<string | null>(null);
-  const [name, setName] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setEmail(window.localStorage.getItem("ai-investment-agent-user"));
-      setName(window.localStorage.getItem("ai-investment-agent-name"));
-    }
-  }, []);
+  const email = useSyncExternalStore(subscribe, getEmailSnapshot, getEmptySnapshot);
+  const name = useSyncExternalStore(subscribe, getNameSnapshot, getEmptySnapshot);
 
   return (
     <DropdownMenu>

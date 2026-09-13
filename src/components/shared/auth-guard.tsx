@@ -1,23 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+function subscribe(onStoreChange: () => void) {
+  window.addEventListener("storage", onStoreChange);
+  return () => window.removeEventListener("storage", onStoreChange);
+}
+
+function getSnapshot() {
+  return window.localStorage.getItem("ai-investment-agent-token");
+}
+
+function getServerSnapshot() {
+  return "placeholder";
+}
+
 export function DashboardAuthGuard({ children }: { children: React.ReactNode }) {
-  const [ready, setReady] = useState(false);
   const router = useRouter();
+  const token = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   useEffect(() => {
-    const token = typeof window !== "undefined" ? window.localStorage.getItem("ai-investment-agent-token") : null;
     if (!token) {
       router.replace("/login");
-      return;
     }
+  }, [token, router]);
 
-    setReady(true);
-  }, [router]);
-
-  if (!ready) {
+  if (!token) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background text-foreground">
         <div className="rounded-3xl border border-border/70 bg-background/90 p-8 text-center shadow-lg">

@@ -5,7 +5,19 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+interface AuthResponsePayload {
+  success?: boolean;
+  error?: string;
+  data?: {
+    token: string;
+    user: {
+      id?: string;
+      email: string;
+      name?: string;
+    };
+  };
+}
 
 export default function LoginPage() {
   const router = useRouter();
@@ -33,14 +45,14 @@ export default function LoginPage() {
       });
 
       const text = await response.text();
-      let payload: any = null;
+      let payload: AuthResponsePayload | null = null;
       try {
-        payload = text ? JSON.parse(text) : null;
+        payload = text ? (JSON.parse(text) as AuthResponsePayload) : null;
       } catch (parseError) {
         console.error("Login response parse error", parseError, text);
       }
 
-      if (!response.ok || !payload?.success) {
+      if (!response.ok || !payload?.success || !payload.data) {
         setError(payload?.error ?? `Unable to log in. (${response.status})`);
         setIsSubmitting(false);
         return;

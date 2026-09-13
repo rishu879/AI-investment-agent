@@ -1,5 +1,8 @@
 import { env } from "@/config/env";
 import { logError } from "@/lib/logger";
+import { PrismaClient } from "@prisma/client";
+import { Pool } from "pg";
+import { PrismaPg } from "@prisma/adapter-pg";
 
 interface PrismaLike {
   $connect: () => Promise<void>;
@@ -28,8 +31,6 @@ interface PrismaLike {
   };
 }
 
-type PrismaClientConstructor = new (options?: { datasourceUrl?: string }) => PrismaLike;
-
 class PrismaClientStub implements PrismaLike {
   $connect = async () => undefined;
   $disconnect = async () => undefined;
@@ -52,22 +53,19 @@ class PrismaClientStub implements PrismaLike {
   };
   user = {
     create: async (args: unknown) => args,
-    findUnique: async (args: unknown) => args,    update: async (args: unknown) => args,  };
+    findUnique: async (args: unknown) => args,
+    update: async (args: unknown) => args,
+  };
 }
 
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaLike };
 
 const createPrismaClient = (): PrismaLike => {
   try {
-    const prismaModule = require("@prisma/client") as { PrismaClient?: PrismaClientConstructor };
-    const PrismaClientCtor = prismaModule.PrismaClient;
-
-    if (PrismaClientCtor) {
-      const { Pool } = require("pg");
-      const { PrismaPg } = require("@prisma/adapter-pg");
+    if (env.DATABASE_URL) {
       const pool = new Pool({ connectionString: env.DATABASE_URL });
       const adapter = new PrismaPg(pool);
-      return new PrismaClientCtor({ adapter }) as unknown as PrismaLike;
+      return new PrismaClient({ adapter }) as unknown as PrismaLike;
     }
   } catch (error) {
     logError("Using Prisma fallback client", { error });

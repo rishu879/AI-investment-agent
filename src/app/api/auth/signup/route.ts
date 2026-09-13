@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
         },
       },
     });
-  } catch (error) {
+  } catch {
     return internalError("Unable to create account, please try again.");
   }
 }

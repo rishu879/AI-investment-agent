@@ -32,6 +32,97 @@ export default function DashboardPage() {
         <SearchBar />
       </div>
 
+      {/* Quick Access Ecosystem Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
+        <Link
+          href="/dashboard/trading-practice"
+          className="p-3 rounded-2xl border border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 transition-all text-center group shadow-xs"
+        >
+          <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition-transform">
+            <span className="text-base font-bold">⚡</span>
+          </div>
+          <div className="font-semibold text-xs text-foreground">Practice Trade</div>
+          <div className="text-[9px] text-muted-foreground mt-0.5">$100k Exness Demo</div>
+        </Link>
+
+        <Link
+          href="/dashboard/learn"
+          className="p-3 rounded-2xl border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all text-center group shadow-xs"
+        >
+          <div className="w-8 h-8 rounded-lg bg-primary/20 text-primary flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition-transform">
+            <span className="text-base font-bold">🎓</span>
+          </div>
+          <div className="font-semibold text-xs text-foreground">Learn Academy</div>
+          <div className="text-[9px] text-muted-foreground mt-0.5">Real-Life Roadmap</div>
+        </Link>
+
+        <Link
+          href="/dashboard/markets"
+          className="p-3 rounded-2xl border bg-card/60 hover:bg-card hover:border-primary/50 transition-all text-center group shadow-xs"
+        >
+          <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition-transform">
+            <span className="text-base font-bold">📈</span>
+          </div>
+          <div className="font-semibold text-xs text-foreground">Live Markets</div>
+          <div className="text-[9px] text-muted-foreground mt-0.5">Indices & Heatmap</div>
+        </Link>
+
+        <Link
+          href="/dashboard/screener"
+          className="p-3 rounded-2xl border bg-card/60 hover:bg-card hover:border-primary/50 transition-all text-center group shadow-xs"
+        >
+          <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition-transform">
+            <span className="text-base font-bold">🎛️</span>
+          </div>
+          <div className="font-semibold text-xs text-foreground">Stock Screener</div>
+          <div className="text-[9px] text-muted-foreground mt-0.5">Value & Growth</div>
+        </Link>
+
+        <Link
+          href="/dashboard/technical"
+          className="p-3 rounded-2xl border bg-card/60 hover:bg-card hover:border-primary/50 transition-all text-center group shadow-xs"
+        >
+          <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition-transform">
+            <span className="text-base font-bold">🤖</span>
+          </div>
+          <div className="font-semibold text-xs text-foreground">AI Predictor</div>
+          <div className="text-[9px] text-muted-foreground mt-0.5">Technical Signals</div>
+        </Link>
+
+        <Link
+          href="/dashboard/portfolio"
+          className="p-3 rounded-2xl border bg-card/60 hover:bg-card hover:border-primary/50 transition-all text-center group shadow-xs"
+        >
+          <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition-transform">
+            <span className="text-base font-bold">💼</span>
+          </div>
+          <div className="font-semibold text-xs text-foreground">Portfolio</div>
+          <div className="text-[9px] text-muted-foreground mt-0.5">P&L & Allocation</div>
+        </Link>
+
+        <Link
+          href="/dashboard/watchlist"
+          className="p-3 rounded-2xl border bg-card/60 hover:bg-card hover:border-primary/50 transition-all text-center group shadow-xs"
+        >
+          <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition-transform">
+            <span className="text-base font-bold">🔔</span>
+          </div>
+          <div className="font-semibold text-xs text-foreground">Watchlist</div>
+          <div className="text-[9px] text-muted-foreground mt-0.5">Price & Stops</div>
+        </Link>
+
+        <Link
+          href="/dashboard/calculators"
+          className="p-3 rounded-2xl border bg-card/60 hover:bg-card hover:border-primary/50 transition-all text-center group shadow-xs"
+        >
+          <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition-transform">
+            <span className="text-base font-bold">🧮</span>
+          </div>
+          <div className="font-semibold text-xs text-foreground">Calculators</div>
+          <div className="text-[9px] text-muted-foreground mt-0.5">SIP, EMI & CAGR</div>
+        </Link>
+      </div>
+
       <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
         <div className="space-y-6">
           <div className="rounded-3xl border border-border/70 bg-background/80 p-6 shadow-sm">
